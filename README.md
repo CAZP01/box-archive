@@ -11,14 +11,14 @@
 ---
 
 ## Daftar Isi
-- [Latar Belakang & Masalah](#-latar-belakang--masalah)
-- [Fitur Utama](#-fitur-utama)
-- [Arsitektur Sistem](#-arsitektur-sistem)
-- [Teknologi yang Digunakan (Tech Stack)](#-teknologi-yang-digunakan-tech-stack)
-- [Persyaratan Sistem & Fitur Non-Fungsional](#-persyaratan-sistem--fitur-non-fungsional)
-- [Tim & Pembagian Peran](#-tim--pembagian-peran)
-- [Struktur Proyek](#-struktur-proyek)
-- [Panduan Instalasi & Pengoperasian](#-panduan-instalasi--pengoperasian)
+- [Latar Belakang & Masalah](#latar-belakang--masalah)
+- [Fitur Utama](#fitur-utama)
+- [Arsitektur Sistem](#arsitektur-sistem)
+- [Teknologi yang Digunakan (Tech Stack)](#teknologi-yang-digunakan-tech-stack)
+- [Persyaratan Sistem & Fitur Non-Fungsional](#persyaratan-sistem--fitur-non-fungsional)
+- [Tim & Pembagian Peran](#tim--pembagian-peran)
+- [Struktur Proyek](#struktur-proyek)
+- [Panduan Instalasi & Pengoperasian](#panduan-instalasi--pengoperasian)
 
 ---
 
@@ -109,7 +109,7 @@ Sistem terintegrasi yang memantau keberadaan penanggung jawab kelas/jadwal secar
 
 ---
 
-## 📂 Struktur Proyek
+## Struktur Proyek
 
 ```bash
 box-archive/
