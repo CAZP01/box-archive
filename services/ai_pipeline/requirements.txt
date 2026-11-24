@@ -1,0 +1,5 @@
+faster-whisper
+python-dotenv
+langchain
+langchain-google-genai
+pydantic
