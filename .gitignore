@@ -19,6 +19,8 @@ env/
 *.flac
 *.tmp
 output_hasil_kelas.json
+eval_report*.json
+apps/backend/storage/
 
 # Node / Frontend
 node_modules/

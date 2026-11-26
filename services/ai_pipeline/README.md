@@ -30,7 +30,8 @@ services/ai_pipeline/
 ├── requirements.txt      # Dependensi Python (faster-whisper, langchain, pydantic, dll.)
 ├── stt_processor.py      # Modul Speech-to-Text (Faster-Whisper Bahasa Indonesia)
 ├── summarizer.py         # Modul Summarization 3 Segmen (LangChain + Gemini 2.5 Flash)
-└── main_pipeline.py      # Orkestrator pipeline, penyimpanan arsip, & penghapusan audio
+├── main_pipeline.py      # Orkestrator pipeline, penyimpanan arsip, & penghapusan audio
+└── evaluate_wer.py       # Skrip evaluasi akurasi WER, CER, & RTF (NFR-07)
 ```
 
 ---
@@ -77,6 +78,19 @@ output_json_path = run_pipeline(
     delete_audio=True,  # True = hapus raw audio setelah sukses disimpan (FR-05 & NFR-05)
 )
 ```
+
+### 3. Evaluasi Akurasi STT (WER, CER, & RTF — NFR-07)
+
+Gunakan `evaluate_wer.py` untuk menguji tingkat kesalahan kata (*Word Error Rate*), tingkat kesalahan karakter (*Character Error Rate*), serta *Real-Time Factor* (RTF) guna melengkapi pengujian **NFR-07**:
+
+- **Evaluasi dari file JSON hasil `main_pipeline.py` (atau file `.txt`):**
+  ```powershell
+  python evaluate_wer.py --reference ground_truth.txt --hypothesis output_hasil_kelas.json --target-wer 20
+  ```
+- **Benchmark perbandingan beberapa ukuran model Whisper pada satu audio uji (tanpa menghapus audio):**
+  ```powershell
+  python evaluate_wer.py --audio sample_uji.wav --reference ground_truth.txt --compare-models tiny base small --target-wer 20 --output-json eval_report.json
+  ```
 
 ---
 

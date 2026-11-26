@@ -10,3 +10,4 @@ __pycache__/
 *.flac
 *.tmp
 output_hasil_kelas.json
+eval_report*.json

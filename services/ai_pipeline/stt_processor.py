@@ -156,8 +156,8 @@ def transcribe_audio_detailed(
     if beam_size <= 0:
         raise ValueError("WHISPER_BEAM_SIZE harus berupa bilangan bulat positif.")
 
-    started_at = time.perf_counter()
     model = _get_whisper_model(model_size, device, compute_type)
+    started_at = time.perf_counter()
 
     segments_iter, info = model.transcribe(
         str(validated_path),

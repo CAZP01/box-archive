@@ -8,8 +8,12 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 
-from stt_processor import transcribe_audio_detailed, validate_audio_file
-from summarizer import summarize_transcript
+try:
+    from .stt_processor import transcribe_audio_detailed, validate_audio_file
+    from .summarizer import summarize_transcript
+except ImportError:
+    from stt_processor import transcribe_audio_detailed, validate_audio_file
+    from summarizer import summarize_transcript
 
 load_dotenv(Path(__file__).with_name(".env"))
 
