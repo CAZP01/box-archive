@@ -1,9 +1,6 @@
-import json
-
 import paho.mqtt.client as mqtt
-
-from config import settings
-
+import json
+from app.config import settings
 
 class MQTTManager:
     def __init__(self):
@@ -21,9 +18,7 @@ class MQTTManager:
 
     def start(self):
         try:
-            self.client.connect(
-                settings.MQTT_BROKER_HOST, settings.MQTT_BROKER_PORT, 60
-            )
+            self.client.connect(settings.MQTT_BROKER_HOST, settings.MQTT_BROKER_PORT, 60)
             self.client.loop_start()
         except Exception as e:
             print(f"[MQTT] Connection failed: {e}")
@@ -32,6 +27,5 @@ class MQTTManager:
         topic = f"boxarchive/room/{room_id}/control"
         payload = json.dumps({"device": device, "action": action})
         self.client.publish(topic, payload)
-
 
 mqtt_manager = MQTTManager()
