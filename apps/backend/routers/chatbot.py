@@ -1,13 +1,8 @@
 from fastapi import APIRouter
 
-try:
-    from schema.chatbot import ChatRequest, ChatResponse
-    from services.ai_pipeline_bridge import load_transcript_text
-    from services.langchain_agent import rag_agent
-except ImportError:
-    from app.schemas.chatbot import ChatRequest, ChatResponse
-    from app.services.ai_pipeline_bridge import load_transcript_text
-    from app.services.langchain_agent import rag_agent
+from schema.chatbot import ChatRequest, ChatResponse
+from services.ai_pipeline_bridge import load_transcript_text
+from services.langchain_agent import rag_agent
 
 router = APIRouter(prefix="/api/v1/chatbot", tags=["RAG Chatbot Agent"])
 

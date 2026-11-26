@@ -4,30 +4,17 @@ import uuid
 
 from fastapi import APIRouter, File, Form, HTTPException, Query, UploadFile
 
-try:
-    from schema.archive import (
-        AdaptiveMaterialOut,
-        ArchiveDetailOut,
-        ArchiveProcessResponse,
-        StructuredSummary,
-    )
-    from services.ai_pipeline_bridge import (
-        TEMP_AUDIO_DIR,
-        load_archive_by_lecture,
-        process_uploaded_audio,
-    )
-except ImportError:
-    from app.schemas.archive import (
-        AdaptiveMaterialOut,
-        ArchiveDetailOut,
-        ArchiveProcessResponse,
-        StructuredSummary,
-    )
-    from app.services.ai_pipeline_bridge import (
-        TEMP_AUDIO_DIR,
-        load_archive_by_lecture,
-        process_uploaded_audio,
-    )
+from schema.archive import (
+    AdaptiveMaterialOut,
+    ArchiveDetailOut,
+    ArchiveProcessResponse,
+    StructuredSummary,
+)
+from services.ai_pipeline_bridge import (
+    TEMP_AUDIO_DIR,
+    load_archive_by_lecture,
+    process_uploaded_audio,
+)
 
 router = APIRouter(prefix="/api/v1/archives", tags=["Archives & Adaptive Distribution"])
 
@@ -36,7 +23,9 @@ router = APIRouter(prefix="/api/v1/archives", tags=["Archives & Adaptive Distrib
 async def process_class_audio_endpoint(
     lecture_id: str = Form(..., description="ID sesi perkuliahan (D2 Sesi kelas)"),
     course_name: str | None = Form(None, description="Nama mata kuliah (opsional)"),
-    audio_file: UploadFile = File(..., description="File rekaman audio kelas (.wav, .mp3, .m4a, .webm)"),
+    audio_file: UploadFile = File(
+        ..., description="File rekaman audio kelas (.wav, .mp3, .m4a, .webm)"
+    ),
 ):
     """
     Endpoint Proses 3.0 (FR-04, FR-05, NFR-05):
@@ -53,7 +42,9 @@ async def process_class_audio_endpoint(
             shutil.copyfileobj(audio_file.file, buffer)
     except Exception as exc:
         temp_audio_path.unlink(missing_ok=True)
-        raise HTTPException(status_code=500, detail=f"Gagal menyimpan file audio sementara: {exc}") from exc
+        raise HTTPException(
+            status_code=500, detail=f"Gagal menyimpan file audio sementara: {exc}"
+        ) from exc
     finally:
         await audio_file.close()
 
