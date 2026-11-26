@@ -1,4 +1,4 @@
-# Box Archive: Sistem Smartclass dan Arsip Pencatat KBM di Kelas
+# Box Archive: Sistem Smartclass dan Arsip Pencatat Kegiatan Belajar Mengajar di Kelas
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Framework: React](https://img.shields.io/badge/Frontend-React.js-61DAFB?logo=react)](https://reactjs.org/)
@@ -6,7 +6,7 @@
 [![AI Integration: LangChain](https://img.shields.io/badge/AI-LangChain%20%2B%20Gemini%202.5-121011?logo=google)](https://python.langchain.com/)
 [![IoT Protocol: MQTT](https://img.shields.io/badge/IoT-MQTT%20%2B%20ESP32-660099?logo=eclipse-mosquitto)](https://mqtt.org/)
 
-**Box Archive** adalah ekosistem smartclass berbasis IoT dan Artificial Intelligence (AI) yang dirancang untuk mengotomatisasi efisiensi operasional ruang kelas serta mencatat, meringkas, dan mendistribusikan materi pembelajaran secara adaptif.
+**Box Archive** adalah ekosistem *smartclass* berbasis Internet of Things (IoT) dan Artificial Intelligence (AI) yang dirancang untuk mengotomatisasi efisiensi perangkat ruang kelas serta merekam, mentranskripsikan, meringkas, dan mendistribusikan arsip materi pembelajaran secara adaptif berdasarkan kehadiran mahasiswa.
 
 ---
 
@@ -25,33 +25,31 @@
 ## Latar Belakang & Masalah
 
 ### Masalah yang Dihadapi:
-1. **Pemborosan Energi Fasilitas Kelas:** Perangkat elektronik (AC, lampu, proyektor) sering tetap menyala meskipun ruangan dalam kondisi kosong atau perkuliahan telah selesai.
-2. **Hilangnya Pembahasan Verbal:** Penjelasan verbal pengajar, tanya jawab, dan diskusi mendalam saat jam perkuliahan menguap begitu saja tanpa terdokumentasi dengan baik.
-3. **Kesenjangan Pemahaman Siswa:** Distribusi materi pasca-kelas umumnya disaratkan sama untuk seluruh siswa tanpa memperhitungkan status kehadiran.
+1. **Pemborosan Energi Fasilitas Kelas:** Perangkat elektronik (AC, lampu, proyektor) sering tetap menyala meskipun ruangan kosong atau tidak ada mata kuliah yang berlangsung.
+2. **Hilangnya Pembahasan Verbal:** Penjelasan lisan pengajar, sesi tanya jawab, dan diskusi mendalam saat perkuliahan hilang setelah kelas selesai karena hanya mengandalkan salinan presentasi atau catatan manual.
+3. **Kesenjangan Pemahaman Mahasiswa:** Sistem akademik umumnya memberikan akses rekapitulasi materi yang sama kepada seluruh mahasiswa tanpa memandang status kehadiran mereka di kelas.
 
 ### Solusi **Box Archive**:
-Sistem terintegrasi yang memantau keberadaan penanggung jawab kelas/jadwal secara real-time via *Face Recognition* & IoT, mengaktifkan otomatisasi sakelar perangkat keras, merekam interaksi suara kelas, mengonversinya menjadi transkrip terstruktur via AI (Speech-to-Text & LLM), serta menyajikan fitur RAG Chatbot dan rekomendasi materi yang dipersonalisasi berdasarkan variabel presensi.
+Sistem terintegrasi yang memvalidasi jadwal dan mendeteksi keberadaan dosen secara *real-time* via *Face Recognition* & IoT untuk menyalakan/mematikan perangkat elektronik kelas secara otomatis, merekam interaksi suara kelas, mengonversinya menjadi transkrip dan rangkuman 3 segmen (*poin utama materi*, *sesi tanya jawab*, *tugas*) via *Speech-to-Text* & LLM, serta mendistribusikan materi tindak lanjut secara adaptif beserta RAG Chatbot sesuai status kehadiran mahasiswa.
 
 ---
 
 ## Fitur Utama
 
-- **Automated Smart Class Trigger (IoT & Vision):** Pengendalian perangkat fisik kelas (lampu, AC, proyektor) via mikrokontroler (ESP32) dan deteksi presensi penanggung jawab kelas via *DeepFace*.
-- **Speech-to-Text & Automatic Summarization:** Transkripsi otomatis perkuliahan Bahasa Indonesia menggunakan *Faster-Whisper* dan ekstraksi poin penting/ringkasan terstruktur.
-- **Contextual RAG Chatbot:** Fitur tanya-jawab materi perkuliahan cerdas berbasis *LangChain* dan *Gemini 2.5 Flash* yang dibatasi (*guardrailed*) hanya menjawab sesuai konteks materi hari itu.
-- **Adaptive Content Distribution:**
-  - **Siswa Hadir:** Mengakses transkrip penuh, RAG Chatbot, serta modul *Rekomendasi Pembelajaran Lanjutan*.
-  - **Siswa Absen:** Mengakses transkrip/ringkasan, RAG Chatbot, serta penyesuaian *Materi Pendukung Dasar* untuk mengejar ketertinggalan.
-- **Data Privacy & Security:** Penghapusan otomatis file rekaman suara mentah (*raw audio*) setelah proses transkripsi selesai untuk menjaga privasi.
+- **Otomasi Kelas & Kontrol Perangkat (FR-01 – FR-03):** Validasi jadwal *real-time* dan deteksi kehadiran dosen via *DeepFace* untuk menyalakan perangkat elektronik kelas (AC, lampu, proyektor), memulai perekaman audio saat status kelas `Active`, serta mematikan perangkat saat kelas ditutup.
+- **Speech-to-Text & Peringkasan Terstruktur 3 Segmen (FR-04):** Transkripsi otomatis rekaman suara kelas Bahasa Indonesia menggunakan *Faster-Whisper* dan peringkasan menggunakan *LangChain + Gemini 2.5 Flash* ke dalam tiga segmen: **Poin Utama Materi**, **Sesi Tanya Jawab**, dan **Tugas**.
+- **Privasi & Integritas Penghapusan Audio (FR-05 & NFR-05):** Penghapusan otomatis rekaman suara mentah (*raw audio*) dari server segera setelah transkrip dan rangkuman berhasil tersimpan, dengan mekanisme retensi sementara untuk pemrosesan ulang (*retry*) apabila terjadi kegagalan proses.
+- **Distribusi Materi Adaptif Berbasis Kehadiran (FR-06 – FR-08):**
+  - **Mahasiswa Hadir:** Mengakses transkrip penuh, rangkuman terstruktur, RAG Chatbot, serta *Rekomendasi Bacaan Lanjutan*.
+  - **Mahasiswa Absen:** Mengakses rangkuman terstruktur, RAG Chatbot, serta distribusi *Materi Pendukung Dasar* untuk mengejar ketertinggalan konteks.
+- **Contextual RAG Chatbot (NFR Reliability):** Chatbot interaktif berbasis *LangChain* dan *Gemini 2.5 Flash* yang dibatasi (*guardrailed*) hanya menjawab berdasarkan konteks transkrip perkuliahan hari itu.
 
 ---
 
 ## Arsitektur Sistem
 
- visualisasi alur komunikasi antar modul dalam sistem Box Archive:
-
-```
-[ Sensor / Mikrokontroler (ESP32) ]
+```text
+[ Sensor / Mikrokontroler (ESP32 + INMP441 I2S) ]
           | (MQTT Protocol)
           v
 [ Broker MQTT / Cloud ] ---> [ FastAPI Backend ] ---> [ Database Utama (Supabase) ]
@@ -75,56 +73,51 @@ Sistem terintegrasi yang memantau keberadaan penanggung jawab kelas/jadwal secar
 
 | Kategori | Teknologi | Deskripsi |
 |---|---|---|
-| **Frontend** | React.js (PWA) | Progressive Web Application responsif untuk Desktop & Mobile |
-| **Backend API** | Python (FastAPI) | Framework REST API tinggi performa & orkestrator layanan |
-| **IoT Hardware & Protocol**| ESP32, INMP441, MQTT | Sensor fisik kelas, mikrofon I2S, dan protokol pesan Publish/Subscribe |
-| **Computer Vision** | DeepFace + OpenCV | Pipeline pengenalan wajah dosen real-time |
-| **Speech Processing** | OpenAI Whisper / Faster-Whisper | Pemrosesan audio perkuliahan Bahasa Indonesia ke Teks |
-| **LLM & Agent Framework** | LangChain + Gemini 2.5 Flash | Pembuat ringkasan terstruktur dan mesin AI Chatbot |
-| **Database & Vector Store**| Supabase + pgvector / ChromaDB | Penyimpanan relational database & vector embedding data teks |
+| **Frontend** | React.js (PWA) | Progressive Web Application responsif untuk PC/Laptop & Mobile |
+| **Backend API** | Python (FastAPI) | REST API server, orkestrasi bisnis, dan integrasi layanan |
+| **IoT Hardware & Protocol** | ESP32, INMP441 I2S, MQTT | Mikrokontroler kelas, mikrofon digital I2S, dan komunikasi Publish/Subscribe |
+| **Computer Vision** | DeepFace + OpenCV | Pipeline pengenalan wajah dosen dan deteksi kehadiran *real-time* |
+| **Speech-to-Text & NLP** | Faster-Whisper + LangChain + Gemini 2.5 Flash | Transkripsi audio Bahasa Indonesia dan ekstraksi rangkuman 3 segmen |
+| **RAG Agent & Chatbot** | LangChain + Gemini 2.5 Flash | Mesin tanya-jawab kontekstual dan distribusi rekomendasi materi |
+| **Database & Vector Store** | Supabase + pgvector / ChromaDB | Basis data relasional utama dan penyimpanan *vector embedding* arsip |
 
 ---
 
 ## Persyaratan Sistem & Fitur Non-Fungsional
 
-- **Performa Antarmuka:** Penguatan respons Web PWA $< 3-5$ detik pada koneksi internet standar.
-- **Batas Waktu Pemrosesan AI:** Konversi audio ke transkrip dan ringkasan diselesaikan maksimal $30$ menit setelah sesi kelas ditutup.
-- **AI Safety & Hallucination Prevention:** Chatbot secara ketat mengembalikan pesan *fallback*: `"Maaf, informasi ini tidak terdapat dalam rekaman kelas hari ini"` jika query berada di luar konteks transkrip.
-- **Privasi File Audio:** File *raw audio* dihapus otomatis dari server lokal/cloud setelah transkripsi berhasil disimpan ke basis data.
+- **Kinerja Antarmuka:** Aplikasi web memuat data dalam waktu kurang dari 3–5 detik pada koneksi internet standar.
+- **Batas Waktu Pemrosesan AI:** Konversi suara ke teks (STT) dan peringkasan 3 segmen diselesaikan maksimal **30 menit** setelah kelas resmi ditutup oleh dosen di web app.
+- **Keandalan Chatbot (Anti-Halusinasi):** Chatbot wajib memberikan respons baku `"Maaf, informasi ini tidak terdapat dalam rekaman kelas hari ini"` jika mahasiswa bertanya di luar konteks transkrip kelas.
+- **Privasi Audio (FR-05 & NFR-05):** Data rekaman suara mentah (*raw audio*) dihapus otomatis dari server setelah transkrip dan rangkuman berhasil tersimpan.
 
 ---
 
 ## Tim & Pembagian Peran
 
-| NIM | Nama | Peran & Tanggung Jawab Utama |
+Sesuai dengan pembagian tugas pada Proposal Capstone Box Archive:
+
+| NIM | Nama | Tugas dalam Proyek |
 |---|---|---|
-| **23106050024** | Chairul ‘Azmi Zuhdi Pramono | Lead Backend Engineer API |
-| **23106050016** | M. Alan Daulay | Speech-to-Text & Summarization (Audio & NLP Pipeline) & LangChain Agent Architect |
-| **23106050065** | Shofy Naila Az-Zahra | Frontend Engineer (Progressive Web App - React) |
-| **23106050020** | Aisyah Ayudia Inara | Database Administrator & Vector DB Setup (Supabase/pgvector) |
-| **23106050046** | Dwi Estriana | Implementasi Komunikasi MQTT Broker, Publisher & Subscriber |
-| **23106050057** | Galih Fathurahman Ardiansyah | Face Recognition Pipeline (DeepFace & OpenCV) & LangChain Agent Architect |
-| **23106050087** | Sidhi Akmal Mawla | IoT Hardware Engineer & Sensor Data Publisher |
-| - | Anggraini Wijayanti | IoT Service Integration |
+| **23106050024** | Chairul ‘Azmi Zuhdi Pramono | Menyusun backend dan LangChain agent |
+| **23106050016** | M. Alan Daulay | *Speech-to-Text & Summarization* (Audio & NLP Pipeline) |
+| **23106050065** | Shofy Naila Az-Zahra | Membangun *Progressive Web App* (PWA) |
+| **23106050020** | Aisyah Ayudia Inara | Menyusun Database |
+| **23106050046** | Dwi Estriana | Implementasi komunikasi MQTT antara perangkat IoT dan server menggunakan MQTT Broker, Publisher, dan Subscriber |
+| **23106050057** | Galih Fathurahman Ardiansyah | Membangun pipeline *Face Recognition* (DeepFace & OpenCV) untuk deteksi wajah dosen secara *real-time* |
+| **23106050087** | Sidhi Akmal Mawla | Membangun hardware IoT dan Publisher data sensor MQTT |
+| - | Anggraini Wijayanti | IoT Service |
 
 ---
 
 ## Struktur Proyek
 
-```bash
+```text
 box-archive/
-├── apps/
-│   ├── web/                   # Frontend React.js PWA
-│   └── backend/               # FastAPI Server & REST API Endpoints
+├── apps/                      # Aplikasi Frontend (PWA) & Backend API (FastAPI)
 ├── services/
-│   ├── ai_pipeline/           # Faster-Whisper STT & DeepFace Vision Service
-│   ├── langchain_agent/       # LangChain Agent, Prompts, & RAG Chains
-│   └── iot_service/           # MQTT Publisher, Subscriber, & Device Handler
-├── hardware/
-│   └── esp32_firmware/        # Firmware C++/Arduino untuk Mikrokontroler ESP32
-├── docs/                      # Dokumentasi API, Use Case, & Laporan Capstone
-├── docker-compose.yml         # Konfigurasi container lokal
-└── README.md                  # Dokumentasi Utama
+│   └── ai_pipeline/           # Modul Speech-to-Text (Faster-Whisper) & Summarization 3 Segmen
+├── hardware/                  # Firmware ESP32, sensor ruangan, & konfigurasi mikrofon INMP441 I2S
+└── README.md                  # Dokumentasi utama proyek
 ```
 
 ---
@@ -133,48 +126,26 @@ box-archive/
 
 ### 1. Prasyarat Environment
 - Python `3.10+`
-- Node.js `v18+` & npm/yarn
-- MQTT Broker (e.g., Mosquitto)
-- Supabase Account / PostgreSQL dengan ekstensi `pgvector`
+- Node.js `v18+` & npm
+- MQTT Broker (Mosquitto / Cloud Broker)
+- Supabase / PostgreSQL dengan ekstensi `pgvector`
 
-### 2. Setup Backend API
-```bash
-# Clone Repository
-git clone https://github.com/organization/box-archive.git
-cd box-archive/apps/backend
-
-# Buat dan aktifkan Virtual Environment
+### 2. Menjalankan Modul Speech-to-Text & Summarization (`services/ai_pipeline`)
+```powershell
+cd services/ai_pipeline
 python -m venv venv
-source venv/bin/activate  # Linux/macOS atau `venv\Scripts\activate` di Windows
-
-# Install Dependensi
+.\venv\Scripts\Activate.ps1
 pip install -r requirements.txt
 
-# Jalankan FastAPI Server
-uvicorn main:app --reload --port 8000
-```
+# Salin konfigurasi environment dan isi GEMINI_API_KEY
+Copy-Item .env.example .env
 
-### 3. Setup Frontend (PWA)
-```bash
-cd ../../apps/web
-
-# Install dependensi frontend
-npm install
-
-# Jalankan server pengembangan lokal
-npm run dev
-```
-
-### 4. Setup Service AI & Agent
-```bash
-cd ../../services/langchain_agent
-# Salin konfigurasi environment
-cp .env.example .env
-# Isikan API Key Gemini dan credentials database di file .env
+# Jalankan pipeline pada file rekaman audio kelas
+python main_pipeline.py path/ke/rekaman_kelas.mp3
 ```
 
 ---
 
-## 📄 Lisensi
+## Lisensi
 
-Proyek ini dibuat untuk keperluan Capstone Project Software Engineering. Hak Cipta (c) 2026 Tim Development Box Archive.
+Proyek ini dikembangkan untuk keperluan Capstone Project. Hak Cipta © 2026 Tim Pengembang Box Archive.
